@@ -2,10 +2,11 @@ import React from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
 
 import Meetings from '/imports/api/collections/Meetings';
+import MeetingCard from '/imports/ui/MeetingCard';
 import { createMeeting } from '/imports/api/methods/meetings.create';
 
 
-export const MeetingsList = () => {
+const MeetingsList = () => {
 	const meetings = useTracker(() => {
 		return Meetings.find().fetch();
 	});
@@ -19,19 +20,14 @@ export const MeetingsList = () => {
 
 	return (
 		<div>
-			<h2>Meetings</h2>
-			<ul>
-				{meetings.map(meeting => (
-					<li key={meeting._id}>
-						<a href={meeting.url} target="_blank">
-							{meeting.title}
-						</a>
-					</li>
-				))}
-			</ul>
+			{meetings.map(meeting => (
+				<MeetingCard key={meeting._id} {...meeting} />
+			))}
 			<button onClick={handleCreateMeeting}>
 				Create meeting
 			</button>
 		</div>
 	);
 };
+
+export default MeetingsList;
