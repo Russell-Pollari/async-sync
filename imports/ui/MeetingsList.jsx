@@ -10,12 +10,20 @@ import MeetingForm from '/imports/ui/MeetingForm';
 
 const MeetingsList = () => {
 	const [showForm, setShowForm] = useState(false);
+
+	const loading = useTracker(() => {
+		const sub = Meteor.subscribe('meetings');
+		return !sub.ready();
+	}, []);
+
 	const meetings = useTracker(() => {
 		return Meetings.find({}, {
 			sort: {
 			_createdAt: -1
-		}}).fetch();
-	});
+			}
+		}).fetch();
+	}, []);
+
 
 	return (
 		<div>

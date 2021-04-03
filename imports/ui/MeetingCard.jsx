@@ -1,11 +1,14 @@
 import React from 'react';
-
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+import { archiveMeeting } from '/imports/api/methods/meetings.archive';
+
 
 const useStyles = makeStyles({
 	root: {
@@ -14,19 +17,30 @@ const useStyles = makeStyles({
 		width: '100%',
 		margin: 16,
 	},
+	cardHeader: {
+		display: 'flex',
+	},
 	title: {
 		flexGrow: 1,
 	},
 
 });
 
-const MeetingCard = ({ title, url, description, date }) => {
+const MeetingCard = ({ _id, title, url, description, date }) => {
 	const classes = useStyles();
+
+	const handleArchiveClick = () => {
+		archiveMeeting.call({ meetingId: _id }, (err) => {
+			if (err) {
+				alert(err);
+			}
+		});
+	};
 
 	return (
 		<Card className={classes.root}>
 			<CardContent>
-				<div style={{ display: 'flex' }}>
+				<div className={classes.cardHeader}>
 					<Typography variant="h5" component="h2" className={classes.title}>
 						{title}
 					</Typography>
@@ -48,8 +62,12 @@ const MeetingCard = ({ title, url, description, date }) => {
 				</Typography>
 			</CardContent>
 			<CardActions>
-				<Button size="small">
-					Learn More
+				<Button
+					size="small"
+					startIcon={<DeleteIcon /> }
+					color="secondary"
+					onClick={handleArchiveClick}>
+					Archive
 				</Button>
 			</CardActions>
 		</Card>

@@ -12,6 +12,16 @@ const schema = new SimpleSchema({
 		type: Date,
 		index: 1,
 	},
+	archivedAt: {
+		type: Date,
+		index: 1,
+		autoValue: function() {
+			if (this.isInsert) {
+				return null;
+			}
+		},
+		optional: true,
+	},
 	description: String,
 	url: String,
 	title: String,

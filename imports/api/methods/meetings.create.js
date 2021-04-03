@@ -15,7 +15,6 @@ export const createMeeting = new ValidatedMethod({
 	}).validator(),
 
 	run({ url, title, date, description }) {
-		console.log({ date });
 		Meetings.insert({
 			url,
 			title,
