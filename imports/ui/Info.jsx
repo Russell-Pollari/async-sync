@@ -1,20 +1,37 @@
 import React from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
-import { LinksCollection } from '../api/links';
 
-export const Info = () => {
-  const links = useTracker(() => {
-    return LinksCollection.find().fetch();
-  });
+import Meetings from '/imports/api/collections/Meetings';
+import { createMeeting } from '/imports/api/methods/meetings.create';
 
-  return (
-    <div>
-      <h2>Learn Meteor!</h2>
-      <ul>{links.map(
-        link => <li key={link._id}>
-          <a href={link.url} target="_blank">{link.title}</a>
-        </li>
-      )}</ul>
-    </div>
-  );
+
+export const MeetingsList = () => {
+	const meetings = useTracker(() => {
+		return Meetings.find().fetch();
+	});
+
+	const handleCreateMeeting = () => {
+		createMeeting.call({
+			title: 'new meeting',
+			url: 'https:/google.com',
+		});
+	};
+
+	return (
+		<div>
+			<h2>Meetings</h2>
+			<ul>
+				{meetings.map(meeting => (
+					<li key={meeting._id}>
+						<a href={meeting.url} target="_blank">
+							{meeting.title}
+						</a>
+					</li>
+				))}
+			</ul>
+			<button onClick={handleCreateMeeting}>
+				Create meeting
+			</button>
+		</div>
+	);
 };
