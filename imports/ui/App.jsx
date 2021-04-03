@@ -40,7 +40,7 @@ export const App = () => {
 					{isLoggedIn && (
 						<Button
 							startIcon={<ExitToAppIcon />}
-							color="inherhit"
+							color="inherit"
 							onClick={logout}>
 							Logout
 						</Button>

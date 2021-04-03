@@ -10,12 +10,18 @@ export const createMeeting = new ValidatedMethod({
 	validate: new SimpleSchema({
 		url: String,
 		title: String,
+		description: String,
+		date: Date,
 	}).validator(),
 
-	run({ url, title }) {
+	run({ url, title, date, description }) {
+		console.log({ date });
 		Meetings.insert({
 			url,
 			title,
+			description,
+			date,
+			owner: Meteor.userId(),
 		});
 	}
 });

@@ -1,31 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
 
 import Meetings from '/imports/api/collections/Meetings';
 import MeetingCard from '/imports/ui/MeetingCard';
 import { createMeeting } from '/imports/api/methods/meetings.create';
 
+import MeetingForm from '/imports/ui/MeetingForm';
+
 
 const MeetingsList = () => {
+	const [showForm, setShowForm] = useState(false);
 	const meetings = useTracker(() => {
-		return Meetings.find().fetch();
+		return Meetings.find({}, {
+			sort: {
+			_createdAt: -1
+		}}).fetch();
 	});
-
-	const handleCreateMeeting = () => {
-		createMeeting.call({
-			title: 'new meeting',
-			url: 'https:/google.com',
-		});
-	};
 
 	return (
 		<div>
+			<button onClick={() => setShowForm(true)}>
+				Create meeting
+			</button>
+			{showForm && (
+				<MeetingForm />
+			)}
 			{meetings.map(meeting => (
 				<MeetingCard key={meeting._id} {...meeting} />
 			))}
-			<button onClick={handleCreateMeeting}>
-				Create meeting
-			</button>
 		</div>
 	);
 };

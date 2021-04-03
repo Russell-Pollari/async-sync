@@ -4,6 +4,15 @@ import SimpleSchema from 'simpl-schema';
 import baseSchema from './baseSchema';
 
 const schema = new SimpleSchema({
+	owner: {
+		type: String,
+		index: 1,
+	},
+	date: {
+		type: Date,
+		index: 1,
+	},
+	description: String,
 	url: String,
 	title: String,
 });

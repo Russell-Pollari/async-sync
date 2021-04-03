@@ -14,21 +14,37 @@ const useStyles = makeStyles({
 		width: '100%',
 		margin: 16,
 	},
+	title: {
+		flexGrow: 1,
+	},
+
 });
 
-const MeetingCard = ({ title, url }) => {
+const MeetingCard = ({ title, url, description, date }) => {
 	const classes = useStyles();
 
 	return (
 		<Card className={classes.root}>
 			<CardContent>
-				<Typography variant="h5" component="h2">
-					{title}
-				</Typography>
+				<div style={{ display: 'flex' }}>
+					<Typography variant="h5" component="h2" className={classes.title}>
+						{title}
+					</Typography>
+					{date && (
+						date.toLocaleDateString('en-us', {
+							month: 'short',
+							day: 'numeric',
+							year: 'numeric',
+						})
+					)}
+				</div>
 				<Typography variant="body2" component="p">
 					<a href={url} target="_blank">
 						{url}
 					</a>
+				</Typography>
+				<Typography variant="body2" component="p">
+					{description}
 				</Typography>
 			</CardContent>
 			<CardActions>
