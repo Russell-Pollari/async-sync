@@ -23,6 +23,7 @@ import Menu from './Menu';
 import MeetingsList from './MeetingsList';
 import Account from './Account';
 import LoginForm from './LoginForm';
+import EnrollAccount from './EnrollAccount';
 
 
 const useStyles = makeStyles(theme => ({
@@ -66,7 +67,14 @@ export const App = () => {
 			<main className={classes.content}>
 				<Container>
 					{!isLoggedIn ? (
-						<LoginForm />
+						<Switch>
+							<Route path="/enroll-account/:code">
+								<EnrollAccount />
+							</Route>
+							<Route>
+								<LoginForm />
+							</Route>
+						</Switch>
 					) : (
 						<Switch>
 							<Route path="/account">

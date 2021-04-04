@@ -17,6 +17,16 @@ const Account = () => {
 		return Meteor.users.find().fetch();
 	}, []);
 
+	const handleInviteUser = () => {
+		createUser.call({
+			email: 'test2@email.com',
+		}, (err) => {
+			if (err) {
+				alert(err);
+			}
+		});
+	};
+
 
 	return (
 		<div>
@@ -27,9 +37,7 @@ const Account = () => {
 				</div>
 			))}
 			<Button
-				onClick={() => createUser.call({
-					email: 'pollarir@gmail.com'
-				})}>
+				onClick={handleInviteUser}>
 				Invite user
 			</Button>
 		</div>
