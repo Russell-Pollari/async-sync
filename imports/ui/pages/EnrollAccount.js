@@ -1,7 +1,6 @@
-import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
-import React, { useState, Fragment } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 
@@ -17,10 +16,10 @@ const resetPassword = (token, password ) => {
 		if (err) {
 			alert(err);
 		}
-	})
-}
+	});
+};
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
 	paper: {
 		margin: 16,
 		maxWidth: 512,

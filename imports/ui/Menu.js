@@ -1,13 +1,10 @@
 import { Meteor } from 'meteor/meteor';
-import { useTracker } from 'meteor/react-meteor-data';
 
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -15,8 +12,6 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Link from '@material-ui/core/Link';
-import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import DescriptionIcon from '@material-ui/icons/Description';
 import GroupIcon from '@material-ui/icons/Group';
@@ -25,7 +20,7 @@ import GroupIcon from '@material-ui/icons/Group';
 const logout = () => Meteor.logout();
 
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
 	drawer: {
 		width: 240,
 	},

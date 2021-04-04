@@ -35,7 +35,10 @@ const Users = () => {
 	return (
 		<div>
 			{showInviteForm ?  (
-				<InviteUserForm close={() => setShowInviteForm(false)} />
+				<InviteUserForm
+					createUser={createUser}
+					close={() => setShowInviteForm(false)}
+				/>
 			) : (
 				<div style={{ textAlign: 'right' }}>
 					<Button

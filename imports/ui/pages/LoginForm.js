@@ -1,11 +1,10 @@
 import { Meteor } from 'meteor/meteor';
-import React, { useState, Fragment } from 'react';
+import React from 'react';
 import { Formik, Form, Field } from 'formik';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 
@@ -14,10 +13,11 @@ const login = ({ email, password }) => {
 		if (err) {
 			alert(err);
 		}
-	})
-}
+	});
+};
 
-const useStyles = makeStyles(theme => ({
+
+const useStyles = makeStyles(() => ({
 	paper: {
 		margin: 16,
 		maxWidth: 512,

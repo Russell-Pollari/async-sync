@@ -55,7 +55,7 @@ const MeetingCard = ({
 					)}
 				</div>
 				<Typography variant="body2" component="p">
-					<a href={meetingDocURL} target="_blank">
+					<a href={meetingDocURL} target="_blank" rel="noreferrer">
 						Meeting doc
 					</a>
 				</Typography>

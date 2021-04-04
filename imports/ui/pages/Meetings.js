@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 
+import React, { useState, Fragment } from 'react';
+
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import AddIcon from '@material-ui/icons/Add';
 
 import MeetingForm from '/imports/ui/MeetingForm';
 import MeetingCard from '/imports/ui/MeetingCard';
 
-import Meetings from '/imports/api/collections/Meetings';
-import { createMeeting } from '/imports/api/methods/meetings.create';
+import MeetingsCollection from '/imports/api/collections/Meetings';
 
 
-const MeetingsList = () => {
+const MeetingsPage = () => {
 	const [showForm, setShowForm] = useState(false);
 
 	const loading = useTracker(() => {
@@ -20,16 +22,16 @@ const MeetingsList = () => {
 	}, []);
 
 	const meetings = useTracker(() => {
-		return Meetings.find({}, {
-			sort: {
-			_createdAt: -1
-			}
+		return MeetingsCollection.find({}, {
+				sort: {
+					_createdAt: -1,
+			},
 		}).fetch();
 	}, []);
 
 
 	return (
-		<div >
+		<Fragment>
 			{showForm ?  (
 				<MeetingForm close={() => setShowForm(false)} />
 			) : (
@@ -43,11 +45,15 @@ const MeetingsList = () => {
 					</Button>
 				</div>
 			)}
-			{meetings.map(meeting => (
-				<MeetingCard key={meeting._id} {...meeting} />
-			))}
-		</div>
+			{loading ? (
+				<CircularProgress />
+			) : (
+				meetings.map(meeting => (
+					<MeetingCard key={meeting._id} {...meeting} />
+				))
+			)}
+		</Fragment>
 	);
 };
 
-export default MeetingsList;
+export default MeetingsPage;

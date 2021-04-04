@@ -1,21 +1,17 @@
-import { Meteor } from 'meteor/meteor';
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { createUser } from '/imports/api/methods/users.create';
 
-
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
 	paper: {
 		margin: 16,
 		padding: 16,
@@ -43,7 +39,7 @@ const Input = ({ field, ...rest }) => {
 };
 
 
-const InviteUserForm = ({ close }) => {
+const InviteUserForm = ({ createUser, close }) => {
 	const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 	const classes = useStyles();
 
@@ -57,7 +53,7 @@ const InviteUserForm = ({ close }) => {
 		});
 	};
 
-	const handleCloseSnackBar = (event, reason) => {
+	const handleCloseSnackBar = () => {
 		setShowSuccessMessage(false);
 	};
 

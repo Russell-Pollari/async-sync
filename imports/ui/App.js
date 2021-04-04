@@ -18,10 +18,10 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import Menu from './Menu';
-import MeetingsList from './MeetingsList';
-import Users from './Users';
-import LoginForm from './LoginForm';
-import EnrollAccount from './EnrollAccount';
+import Meetings from './pages/Meetings';
+import Users from './pages/Users';
+import LoginForm from './pages/LoginForm';
+import EnrollAccount from './pages/EnrollAccount';
 
 
 const useStyles = makeStyles(theme => ({
@@ -79,7 +79,7 @@ export const App = () => {
 								<Users />
 							</Route>
 							<Route>
-								<MeetingsList />
+								<Meetings />
 							</Route>
 						</Switch>
 					)}

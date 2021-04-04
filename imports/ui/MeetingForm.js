@@ -1,13 +1,9 @@
-import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
-
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Formik, Form, Field } from 'formik';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
-import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -17,7 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import { createMeeting } from '/imports/api/methods/meetings.create';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
 	paper: {
 		padding: 16,
 		margin: 16,
@@ -31,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 		position: 'absolute',
 		right: 8,
 		top: 0,
-	}
+	},
 }));
 
 
@@ -62,7 +58,7 @@ const MeetingForm = ({ close }) => {
 				close();
 			}
 		});
-	}
+	};
 
 	return (
 		<Paper className={classes.paper}>
