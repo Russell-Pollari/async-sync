@@ -23,7 +23,7 @@ const schema = new SimpleSchema({
 		optional: true,
 	},
 	description: String,
-	url: String,
+	meetingDocURL: String,
 	title: String,
 });
 

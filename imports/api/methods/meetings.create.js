@@ -8,15 +8,15 @@ export const createMeeting = new ValidatedMethod({
 	name: 'meetings.create',
 
 	validate: new SimpleSchema({
-		url: String,
+		meetingDocURL: String,
 		title: String,
 		description: String,
 		date: Date,
 	}).validator(),
 
-	run({ url, title, date, description }) {
+	run({ meetingDocURL, title, date, description }) {
 		Meetings.insert({
-			url,
+			meetingDocURL,
 			title,
 			description,
 			date,

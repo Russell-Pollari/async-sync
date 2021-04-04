@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Fragment } from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
+import Container from '@material-ui/core/Container'
 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -20,7 +21,6 @@ const useStyles = makeStyles(theme => ({
 		flexGrow: 1,
 	},
 	content: {
-		flexGrow: 1,
 		padding: theme.spacing(2),
 	},
 }));
@@ -48,11 +48,13 @@ export const App = () => {
 				</Toolbar>
 			</AppBar>
 			<main className={classes.content}>
-				{isLoggedIn ? (
-					<MeetingsList />
-				) : (
-					<LoginForm />
-				)}
+				<Container>
+					{isLoggedIn ? (
+						<MeetingsList />
+					) : (
+						<LoginForm />
+					)}
+				</Container>
 			</main>
 		</Fragment>
 	);

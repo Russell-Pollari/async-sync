@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -63,7 +62,7 @@ const LoginForm = () => {
 	}
 
 	return (
-		<Container className={classes.container}>
+		<Fragment>
 			<Paper className={classes.paper}>
 				<Typography variant="h6">
 					{action === 'login' ? 'Login' : 'Register'}
@@ -105,7 +104,7 @@ const LoginForm = () => {
 					{action === 'login' ? 'Create account' : 'Login'}
 				</Button>
 			</div>
-		</Container>
+		</Fragment>
 	);
 };
 

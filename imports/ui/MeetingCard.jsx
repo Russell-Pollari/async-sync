@@ -9,12 +9,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import { archiveMeeting } from '/imports/api/methods/meetings.archive';
 
-
 const useStyles = makeStyles({
 	root: {
-		minWidth: 275,
-		maxWidth: 512,
-		width: '100%',
 		margin: 16,
 	},
 	cardHeader: {
@@ -23,10 +19,16 @@ const useStyles = makeStyles({
 	title: {
 		flexGrow: 1,
 	},
-
 });
 
-const MeetingCard = ({ _id, title, url, description, date }) => {
+
+const MeetingCard = ({
+	_id,
+	title,
+	meetingDocURL,
+	description,
+	date,
+}) => {
 	const classes = useStyles();
 
 	const handleArchiveClick = () => {
@@ -53,8 +55,8 @@ const MeetingCard = ({ _id, title, url, description, date }) => {
 					)}
 				</div>
 				<Typography variant="body2" component="p">
-					<a href={url} target="_blank">
-						{url}
+					<a href={meetingDocURL} target="_blank">
+						Meeting doc
 					</a>
 				</Typography>
 				<Typography variant="body2" component="p">
