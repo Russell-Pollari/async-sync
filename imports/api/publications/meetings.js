@@ -9,7 +9,7 @@ Meteor.publish('meetings', function() {
 	}
 
 	return Meetings.find({
-		archivedAt: null
+		archivedAt: null,
 	}, {
 		fields: {
 			owner: 1,
@@ -21,6 +21,6 @@ Meteor.publish('meetings', function() {
 		},
 		sort: {
 			_createdAt: -1,
-		}
+		},
 	});
 });

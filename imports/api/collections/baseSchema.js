@@ -1,4 +1,3 @@
-import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
 const baseSchema = new SimpleSchema({
@@ -10,12 +9,12 @@ const baseSchema = new SimpleSchema({
 				return new Date();
 			} else if (this.isUpsert) {
 				return {
-					$setOnInsert: new Date()
+					$setOnInsert: new Date(),
 				};
 			} else {
 				this.unset();
 			}
-		}
+		},
 	},
 	_updatedAt: {
 		type: Date,
@@ -26,7 +25,7 @@ const baseSchema = new SimpleSchema({
 			}
 		},
 		denyInsert: true,
-		optional: true
+		optional: true,
 	},
 });
 

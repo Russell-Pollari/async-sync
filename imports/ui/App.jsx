@@ -1,22 +1,20 @@
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import {
 	BrowserRouter,
 	Switch,
 	Route,
-	Link as RouterLink,
 } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container'
+import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import Menu from './Menu';

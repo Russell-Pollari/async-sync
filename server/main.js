@@ -20,7 +20,7 @@ Meteor.startup(() => {
 	Accounts.onCreateUser((options, user) => {
 		return {
 			...user,
-			...options
+			...options,
 		};
 	});
 
@@ -31,5 +31,5 @@ Meteor.startup(() => {
 			email: 'admin@meetings.com',
 			password: 'admin',
 		});
-	};
+	}
 });

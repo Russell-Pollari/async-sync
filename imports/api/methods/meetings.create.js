@@ -4,6 +4,7 @@ import SimpleSchema from 'simpl-schema';
 
 import Meetings from '/imports/api/collections/Meetings';
 
+
 export const createMeeting = new ValidatedMethod({
 	name: 'meetings.create',
 
@@ -22,5 +23,5 @@ export const createMeeting = new ValidatedMethod({
 			date,
 			owner: Meteor.userId(),
 		});
-	}
+	},
 });

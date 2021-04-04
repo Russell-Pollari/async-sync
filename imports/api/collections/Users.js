@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
 import baseSchema from './baseSchema';
+
 
 const schema = new SimpleSchema({
 	firstName: {
@@ -13,13 +13,6 @@ const schema = new SimpleSchema({
 		type: String,
 		index: 1,
 	},
-
-	// Built-in Meteor object for passwords and logins
-	services: {
-		type: Object,
-		blackbox: true,
-	},
-
 	emails: Array,
 	'emails.$': Object,
 	'emails.$.address': {
@@ -27,8 +20,13 @@ const schema = new SimpleSchema({
 		regEx: SimpleSchema.RegEx.Email,
 	},
 	'emails.$.verified': Boolean,
-});
 
+	// Built-in Meteor object for passwords and logins
+	services: {
+		type: Object,
+		blackbox: true,
+	},
+});
 
 Meteor.users.attachSchema(baseSchema);
 Meteor.users.attachSchema(schema);

@@ -13,6 +13,6 @@ Meteor.publish('users', function() {
 		},
 		sort: {
 			_createdAt: -1,
-		}
+		},
 	});
 });

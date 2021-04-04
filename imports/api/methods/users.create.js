@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base'
+import { Accounts } from 'meteor/accounts-base';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import SimpleSchema from 'simpl-schema';
+
 
 export const createUser = new ValidatedMethod({
 	name: 'users.create',
@@ -17,5 +18,5 @@ export const createUser = new ValidatedMethod({
 			const userId = Accounts.createUser({ email, firstName, lastName });
 			Accounts.sendEnrollmentEmail(userId);
 		}
-	}
+	},
 });
