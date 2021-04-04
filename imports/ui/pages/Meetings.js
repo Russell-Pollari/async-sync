@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
-
 import React, { useState, Fragment } from 'react';
 
 import Button from '@material-ui/core/Button';
@@ -11,6 +10,7 @@ import MeetingForm from '/imports/ui/MeetingForm';
 import MeetingCard from '/imports/ui/MeetingCard';
 
 import MeetingsCollection from '/imports/api/collections/Meetings';
+import { createMeeting } from '/imports/api/methods/meetings.create';
 
 
 const MeetingsPage = () => {
@@ -33,7 +33,10 @@ const MeetingsPage = () => {
 	return (
 		<Fragment>
 			{showForm ?  (
-				<MeetingForm close={() => setShowForm(false)} />
+				<MeetingForm
+					createMeeting={createMeeting}
+					close={() => setShowForm(false)}
+				/>
 			) : (
 				<div style={{ textAlign: 'right', margin: 16 }}>
 					<Button

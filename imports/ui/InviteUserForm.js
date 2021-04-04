@@ -57,7 +57,6 @@ const InviteUserForm = ({ createUser, close }) => {
 		setShowSuccessMessage(false);
 	};
 
-
 	return (
 		<div className={classes.container}>
 			<Paper className={classes.paper}>

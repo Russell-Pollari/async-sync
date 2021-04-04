@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Formik, Form, Field } from 'formik';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,7 +10,6 @@ import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 
-import { createMeeting } from '/imports/api/methods/meetings.create';
 
 const useStyles = makeStyles(() => ({
 	paper: {
@@ -43,7 +41,7 @@ const Input = ({ field, ...rest }) => {
 };
 
 
-const MeetingForm = ({ close }) => {
+const MeetingForm = ({ close, createMeeting }) => {
 	const classes = useStyles();
 
 	const handleSumbit = (form) => {
