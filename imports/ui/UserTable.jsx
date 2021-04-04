@@ -8,8 +8,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress'
 import Paper from '@material-ui/core/Paper';
+import CircularProgress from '@material-ui/core/CircularProgress'
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
 const useStyles = makeStyles(theme => ({
@@ -19,7 +21,8 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-const UserTable = ({ users = [], loading }) => {
+
+const UserTable = ({ users = [], loading, handleRemoveUser }) => {
 	const classes = useStyles();
 
 	return (
@@ -35,6 +38,7 @@ const UserTable = ({ users = [], loading }) => {
 						<TableRow>
 							<TableCell>Name</TableCell>
 							<TableCell>Email</TableCell>
+							<TableCell />
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -44,6 +48,11 @@ const UserTable = ({ users = [], loading }) => {
 									{user.firstName} {user.lastName}
 								</TableCell>
 								<TableCell>{user.emails[0].address}</TableCell>
+								<TableCell>
+									<IconButton color="secondary" onClick={handleRemoveUser(user._id)}>
+										<DeleteIcon />
+									</IconButton>
+								</TableCell>
 							</TableRow>
 						))}
 					</TableBody>

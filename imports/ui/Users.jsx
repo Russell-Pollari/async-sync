@@ -9,6 +9,7 @@ import InviteUserForm from '/imports/ui/InviteUserForm';
 import UserTable from '/imports/ui/UserTable';
 
 import { createUser } from '/imports/api/methods/users.create';
+import { removeUser } from '/imports/api/methods/users.remove';
 
 
 const Users = () => {
@@ -23,6 +24,13 @@ const Users = () => {
 		return Meteor.users.find().fetch();
 	}, []);
 
+	const handleRemoveUser = (userId) => () => {
+		removeUser.call({ userId }, (err) => {
+			if (err) {
+				alert(err);
+			}
+		});
+	};
 
 	return (
 		<div>
@@ -39,7 +47,11 @@ const Users = () => {
 					</Button>
 				</div>
 			)}
-			<UserTable users={users} />
+			<UserTable
+				loading={loading}
+				users={users}
+				handleRemoveUser={handleRemoveUser}
+			/>
 		</div>
 	);
 };
