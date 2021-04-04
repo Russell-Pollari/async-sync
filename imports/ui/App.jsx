@@ -21,7 +21,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import Menu from './Menu';
 import MeetingsList from './MeetingsList';
-import Account from './Account';
+import Users from './Users';
 import LoginForm from './LoginForm';
 import EnrollAccount from './EnrollAccount';
 
@@ -77,8 +77,8 @@ export const App = () => {
 						</Switch>
 					) : (
 						<Switch>
-							<Route path="/account">
-								<Account />
+							<Route path="/users">
+								<Users />
 							</Route>
 							<Route>
 								<MeetingsList />

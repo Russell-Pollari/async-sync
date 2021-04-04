@@ -7,12 +7,14 @@ export const createUser = new ValidatedMethod({
 	name: 'users.create',
 
 	validate: new SimpleSchema({
+		firstName: String,
+		lastName: String,
 		email: String,
 	}).validator(),
 
-	run({ email }) {
+	run({ email, firstName, lastName }) {
 		if (Meteor.isServer) {
-			const userId = Accounts.createUser({ email });
+			const userId = Accounts.createUser({ email, firstName, lastName });
 			Accounts.sendEnrollmentEmail(userId);
 		}
 	}

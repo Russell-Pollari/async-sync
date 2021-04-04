@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
+
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 
+import MeetingForm from '/imports/ui/MeetingForm';
+import MeetingCard from '/imports/ui/MeetingCard';
 
 import Meetings from '/imports/api/collections/Meetings';
-import MeetingCard from '/imports/ui/MeetingCard';
 import { createMeeting } from '/imports/api/methods/meetings.create';
-
-import MeetingForm from '/imports/ui/MeetingForm';
 
 
 const MeetingsList = () => {

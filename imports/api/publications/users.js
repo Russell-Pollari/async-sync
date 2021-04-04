@@ -5,8 +5,10 @@ Meteor.publish('users', function() {
 		return this.ready();
 	}
 
-	return Meteor.users.find({ }, {
+	return Meteor.users.find({}, {
 		fields: {
+			firstName: 1,
+			lastName: 1,
 			emails: 1,
 		},
 		sort: {
