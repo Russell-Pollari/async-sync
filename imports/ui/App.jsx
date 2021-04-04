@@ -1,20 +1,29 @@
 import { Meteor } from 'meteor/meteor';
-import React, { Fragment } from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
-import Container from '@material-ui/core/Container'
+
+import React, { useState, Fragment } from 'react';
+import {
+	BrowserRouter,
+	Switch,
+	Route,
+	Link as RouterLink,
+} from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container'
 import AppBar from '@material-ui/core/AppBar';
+import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import MenuIcon from '@material-ui/icons/Menu';
 
+import Menu from './Menu';
 import MeetingsList from './MeetingsList';
+import Account from './Account';
 import LoginForm from './LoginForm';
 
-const logout = () => Meteor.logout();
 
 const useStyles = makeStyles(theme => ({
 	title: {
@@ -25,37 +34,51 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
+
 export const App = () => {
+	const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 	const classes = useStyles();
 	const isLoggedIn = useTracker(() => !!Meteor.userId());
 
+	const toggleDrawer = () => {
+		setDrawerIsOpen(!drawerIsOpen);
+	};
+
 	return (
-		<Fragment>
+		<BrowserRouter>
 			<CssBaseline />
 			<AppBar position="sticky">
 				<Toolbar>
-					<Typography variant="h6" className={classes.title}>
-						Meetings
-					</Typography>
 					{isLoggedIn && (
-						<Button
-							startIcon={<ExitToAppIcon />}
+						<IconButton
 							color="inherit"
-							onClick={logout}>
-							Logout
-						</Button>
+							onClick={toggleDrawer}
+							className={classes.menuButton}>
+							<MenuIcon />
+						</IconButton>
 					)}
+					<Typography variant="h6" className={classes.title}>
+						Async/Sync
+					</Typography>
 				</Toolbar>
 			</AppBar>
+			<Menu open={drawerIsOpen} toggle={toggleDrawer} />
 			<main className={classes.content}>
 				<Container>
-					{isLoggedIn ? (
-						<MeetingsList />
-					) : (
+					{!isLoggedIn ? (
 						<LoginForm />
+					) : (
+						<Switch>
+							<Route path="/account">
+								<Account />
+							</Route>
+							<Route>
+								<MeetingsList />
+							</Route>
+						</Switch>
 					)}
 				</Container>
 			</main>
-		</Fragment>
+		</BrowserRouter>
 	);
 };

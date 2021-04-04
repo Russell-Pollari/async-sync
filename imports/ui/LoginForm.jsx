@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Formik, Form, Field } from 'formik';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,14 +7,6 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-
-const createAccount = (form) => {
-	Accounts.createUser(form, (err) => {
-		if (err) {
-			alert(err);
-		}
-	});
-};
 
 
 const login = ({ email, password }) => {
@@ -28,17 +19,18 @@ const login = ({ email, password }) => {
 
 const useStyles = makeStyles(theme => ({
 	paper: {
+		margin: 16,
 		maxWidth: 512,
-		width: '100%',
 		padding: 16,
+		textAlign: 'center',
 		display: 'inline-block',
+	},
+	button: {
+		margin: 16,
 	},
 	container: {
 		textAlign: 'center',
 	},
-	button: {
-		margin: 16,
-	}
 }));
 
 
@@ -51,24 +43,12 @@ const Input = ({ field, ...rest }) => {
 
 const LoginForm = () => {
 	const classes = useStyles();
-	const [action, setAction] = useState('login');
-
-	const toggleAction = () => {
-		if (action === 'login') {
-			setAction('register');
-		} else {
-			setAction('login');
-		}
-	}
 
 	return (
-		<Fragment>
+		<div className={classes.container}>
 			<Paper className={classes.paper}>
-				<Typography variant="h6">
-					{action === 'login' ? 'Login' : 'Register'}
-				</Typography>
 				<Formik
-					onSubmit={action === 'login' ? login : createAccount}
+					onSubmit={login}
 					initialValues={{
 						email: '',
 						password: '',
@@ -80,31 +60,26 @@ const LoginForm = () => {
 								label="Email"
 								fullWidth
 								component={Input}
-							/>
+								/>
 							<Field
 								name="password"
 								label="Password"
 								type="password"
 								fullWidth
 								component={Input}
-							/>
+								/>
 							<Button
 								className={classes.button}
 								variant="contained"
 								color="primary"
 								type="submit">
-								{action === 'login' ? 'Login' : 'Create account'}
+								Login
 							</Button>
 						</Form>
 					)}
 				</Formik>
 			</Paper>
-			<div>
-				<Button onClick={toggleAction}>
-					{action === 'login' ? 'Create account' : 'Login'}
-				</Button>
-			</div>
-		</Fragment>
+		</div>
 	);
 };
 
