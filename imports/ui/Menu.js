@@ -15,6 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import DescriptionIcon from '@material-ui/icons/Description';
 import GroupIcon from '@material-ui/icons/Group';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 
 const logout = () => Meteor.logout();
@@ -59,6 +60,17 @@ const Menu = ({ open, toggle }) => {
 						</ListItemText>
 					</ListItem>
 				</RouterLink>
+				<RouterLink to="/account" style={{ textDecoration: 'none', color: 'inherit' }}>
+					<ListItem button>
+						<ListItemIcon>
+							<AccountCircleIcon />
+						</ListItemIcon>
+						<ListItemText>
+							Account
+						</ListItemText>
+					</ListItem>
+				</RouterLink>
+
 				<RouterLink to="/users" style={{ textDecoration: 'none', color: 'inherit' }}>
 					<ListItem button>
 						<ListItemIcon>

@@ -22,6 +22,7 @@ import Meetings from './pages/Meetings';
 import Users from './pages/Users';
 import LoginForm from './pages/LoginForm';
 import AddMeeting from './pages/AddMeeting';
+import Account from './pages/Account';
 import EnrollAccount from './pages/EnrollAccount';
 
 import GoogleOAuth from '/imports/google/ui/pages/GoogleOAuth';
@@ -80,6 +81,9 @@ export const App = () => {
 						<Switch>
 							<Route path="/users">
 								<Users />
+							</Route>
+							<Route path="/account">
+								<Account />
 							</Route>
 							<Route path="/oauth/google">
 								<GoogleOAuth />

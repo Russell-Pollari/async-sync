@@ -7,13 +7,15 @@ import '/imports/api/methods/meetings.create';
 import '/imports/api/methods/meetings.archive';
 import '/imports/api/methods/users.create';
 import '/imports/api/methods/users.remove';
+import '/imports/api/methods/users.update';
+
+import '/imports/api/publications/meetings';
+import '/imports/api/publications/users';
+import '/imports/api/publications/user';
 
 import '/imports/google/methods/google.getAuthUrl';
 import '/imports/google/methods/google.saveToken';
 import '/imports/google/methods/google.createDoc';
-
-import '/imports/api/publications/meetings';
-import '/imports/api/publications/users';
 
 
 Meteor.startup(() => {
@@ -32,7 +34,7 @@ Meteor.startup(() => {
 		Accounts.createUser({
 			firstName: 'admin',
 			lastName: 'user',
-			email: 'admin@meetings.com',
+			email: 'admin@admin.com',
 			password: 'admin',
 		});
 
