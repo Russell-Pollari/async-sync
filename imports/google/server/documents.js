@@ -6,7 +6,7 @@ export const createDocument = () => {
 	const oAuth2Client = new google.auth.OAuth2(
 		Meteor.settings.private.GOOGLE_CLIENT_ID,
 		Meteor.settings.private.GOOGLE_CLIENT_SECRET,
-		'http://localhost:3000/oauth/google'
+		Meteor.settings.private.GOOGLE_REDIRECT_URL,
 	);
 
 	const user = Meteor.users.findOne({ _id: Meteor.userId() }, {
@@ -29,10 +29,10 @@ export const createDocument = () => {
 
 	return new Promise((resolve, reject) => {
 		docs.documents.create({
-			title: 'Meeting doc from API!',
+			title: 'SM Meeting',
 		}, (err, result)  => {
 			if (err) {
-				reject(err);
+				return reject(err);
 			}
 
 			const docId = result.data.documentId;
@@ -42,7 +42,7 @@ export const createDocument = () => {
 				fields: 'parents',
 			}, (err, result) => {
 				if (err) {
-					reject(err);
+					return reject(err);
 				}
 
 				const previousParents = result.data.parents.join(',');
@@ -53,7 +53,7 @@ export const createDocument = () => {
 					addParents: Meteor.settings.private.MEETING_FOLDER_ID,
 				}, (err) => {
 					if (err) {
-						reject(err);
+						return reject(err);
 					}
 
 					resolve(docId);

@@ -21,6 +21,7 @@ import Menu from './Menu';
 import Meetings from './pages/Meetings';
 import Users from './pages/Users';
 import LoginForm from './pages/LoginForm';
+import AddMeeting from './pages/AddMeeting';
 import EnrollAccount from './pages/EnrollAccount';
 
 import GoogleOAuth from '/imports/google/ui/pages/GoogleOAuth';
@@ -82,6 +83,9 @@ export const App = () => {
 							</Route>
 							<Route path="/oauth/google">
 								<GoogleOAuth />
+							</Route>
+							<Route path="/add-meeting">
+								<AddMeeting />
 							</Route>
 							<Route>
 								<Meetings />

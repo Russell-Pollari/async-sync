@@ -7,12 +7,14 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
+
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 
 import { createDoc } from '/imports/google/methods/google.createDoc';
+import { createMeeting } from '/imports/api/methods/meetings.create';
 
 
 const useStyles = makeStyles(() => ({
@@ -21,6 +23,9 @@ const useStyles = makeStyles(() => ({
 		margin: 16,
 		textAlign: 'center',
 		position: 'relative',
+	},
+	title: {
+		margin: 16,
 	},
 	button: {
 		margin: 16,
@@ -45,22 +50,14 @@ const Input = ({ field, ...rest }) => {
 };
 
 
-const MeetingForm = ({ close, createMeeting }) => {
+const AddMeeting = () => {
 	const [loadingGoogleDoc, setLoadingGoogleDoc] = useState(false);
+	const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
 	const classes = useStyles();
 
-	const handleSumbit = (form) => {
-		// TODO: use a client-side schema to clean, transform and validate
-		// Probably yup, or maybe simpl-schema
-		form['date'] = new Date(form['date']);
-
-		createMeeting.call(form, err => {
-			if (err) {
-				alert(err);
-			} else {
-				close();
-			}
-		});
+	const handleCloseSnackBar = () => {
+		setShowSuccessMessage(false);
 	};
 
 	const handleGoogleClick = (setFieldValue) => () => {
@@ -75,19 +72,30 @@ const MeetingForm = ({ close, createMeeting }) => {
 		});
 	};
 
+	const handleSumbit = (form, callback) => {
+		// TODO: use a client-side schema to clean, transform and validate
+		// Probably yup, or maybe simpl-schema
+		form['date'] = new Date(form['date']);
+
+		createMeeting.call(form, err => {
+			if (err) {
+				alert(err);
+			} else {
+				setShowSuccessMessage(true);
+				callback();
+			}
+		});
+	};
+
 	return (
 		<Paper className={classes.paper}>
-			<IconButton
-				onClick={close}
-				className={classes.closeButton}>
-				<CloseIcon />
-			</IconButton>
-
-			<Typography variant="h6">
+			<Typography variant="h6" className={classes.title}>
 				Add a meeting
 			</Typography>
 			<Formik
-				onSubmit={handleSumbit}
+				onSubmit={(values, actions) => {
+					handleSumbit(values, actions.resetForm);
+				}}
 				initialValues={{
 					title: '',
 					meetingDocURL: '',
@@ -103,19 +111,19 @@ const MeetingForm = ({ close, createMeeting }) => {
 							fullWidth
 							component={Input}
 						/>
-					{!values.meetingDocURL && (
-						loadingGoogleDoc ? (
-							<CircularProgress />
-						) : (
-							<Button
-								variant="contained"
-								color="primary"
-								startIcon={<InsertDriveFileIcon />}
-								onClick={handleGoogleClick(setFieldValue)}>
-								Create google doc
-							</Button>
-						)
-					)}
+						{!values.meetingDocURL && (
+							loadingGoogleDoc ? (
+								<CircularProgress />
+							) : (
+								<Button
+									variant="contained"
+									color="primary"
+									startIcon={<InsertDriveFileIcon />}
+									onClick={handleGoogleClick(setFieldValue)}>
+									Create google doc
+								</Button>
+							)
+						)}
 						<Field
 							name="meetingDocURL"
 							label="Meeting doc"
@@ -148,8 +156,16 @@ const MeetingForm = ({ close, createMeeting }) => {
 					</Form>
 				)}
 			</Formik>
+			<Snackbar
+				open={showSuccessMessage}
+				autoHideDuration={3000}
+				onClose={handleCloseSnackBar}>
+				<Alert onClose={handleCloseSnackBar} severity="success">
+					Meeting created!
+				</Alert>
+			</Snackbar>
 		</Paper>
 	);
 };
 
-export default MeetingForm;
+export default AddMeeting;

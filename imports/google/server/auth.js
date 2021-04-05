@@ -6,6 +6,7 @@ export const getUrl = () => {
 	const oAuth2Client = new google.auth.OAuth2(
 		Meteor.settings.private.GOOGLE_CLIENT_ID,
 		Meteor.settings.private.GOOGLE_CLIENT_SECRET,
+		Meteor.settings.private.GOOGLE_REDIRECT_URL,
 		'http://localhost:3000/oauth/google'
 	);
 
@@ -22,7 +23,7 @@ export const getToken = (code) => {
 	const oAuth2Client = new google.auth.OAuth2(
 		Meteor.settings.private.GOOGLE_CLIENT_ID,
 		Meteor.settings.private.GOOGLE_CLIENT_SECRET,
-		'http://localhost:3000/oauth/google'
+		Meteor.settings.private.GOOGLE_REDIRECT_URL,
 	);
 
 	return new Promise((reject, resolve) => {
