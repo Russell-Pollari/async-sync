@@ -9,7 +9,6 @@ import AddIcon from '@material-ui/icons/Add';
 
 import MeetingCard from '/imports/ui/MeetingCard';
 import MeetingsCollection from '/imports/api/collections/Meetings';
-import { getAuthUrl } from '/imports/google/methods/google.getAuthUrl';
 
 
 const MeetingsPage = () => {
@@ -26,22 +25,8 @@ const MeetingsPage = () => {
 		}).fetch();
 	}, []);
 
-
-	const handleGoogleClick = () => {
-		getAuthUrl.call((err, result) => {
-			if (err) {
-				alert(err);
-			} else {
-				location.href = result;
-			}
-		});
-	};
-
 	return (
 		<Fragment>
-			<Button onClick={handleGoogleClick}>
-				Authorize Google
-			</Button>
 			<div style={{ textAlign: 'right', margin: 16 }}>
 				<Button
 					to="/add-meeting"

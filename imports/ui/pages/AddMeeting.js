@@ -10,10 +10,10 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
-
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 
 import { createDoc } from '/imports/google/methods/google.createDoc';
+import { getAuthUrl } from '/imports/google/methods/google.getAuthUrl';
 import { createMeeting } from '/imports/api/methods/meetings.create';
 
 
@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
 	button: {
 		margin: 16,
 	},
-	closeButton: {
+	googleButton: {
 		position: 'absolute',
 		right: 8,
 		top: 0,
@@ -60,7 +60,18 @@ const AddMeeting = () => {
 		setShowSuccessMessage(false);
 	};
 
-	const handleGoogleClick = (setFieldValue) => () => {
+	const handleGoogleClick = () => {
+		getAuthUrl.call((err, result) => {
+			if (err) {
+				alert(err);
+			} else {
+				location.href = result;
+			}
+		});
+	};
+
+
+	const handleGoogleDocClick = (setFieldValue) => () => {
 		setLoadingGoogleDoc(true);
 		createDoc.call((err, docId) => {
 			setLoadingGoogleDoc(false);
@@ -89,6 +100,9 @@ const AddMeeting = () => {
 
 	return (
 		<Paper className={classes.paper}>
+			<Button onClick={handleGoogleClick} className={classes.googleButton}>
+				Authorize Google
+			</Button>
 			<Typography variant="h6" className={classes.title}>
 				Add a meeting
 			</Typography>
@@ -119,7 +133,7 @@ const AddMeeting = () => {
 									variant="contained"
 									color="primary"
 									startIcon={<InsertDriveFileIcon />}
-									onClick={handleGoogleClick(setFieldValue)}>
+									onClick={handleGoogleDocClick(setFieldValue)}>
 									Create google doc
 								</Button>
 							)

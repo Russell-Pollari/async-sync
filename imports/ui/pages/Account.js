@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-
 import { useTracker } from 'meteor/react-meteor-data';
 import React, { Fragment } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
