@@ -8,6 +8,10 @@ import '/imports/api/methods/meetings.archive';
 import '/imports/api/methods/users.create';
 import '/imports/api/methods/users.remove';
 
+import '/imports/google/methods/google.getAuthUrl';
+import '/imports/google/methods/google.saveToken';
+import '/imports/google/methods/google.createDoc';
+
 import '/imports/api/publications/meetings';
 import '/imports/api/publications/users';
 
@@ -31,5 +35,6 @@ Meteor.startup(() => {
 			email: 'admin@meetings.com',
 			password: 'admin',
 		});
+
 	}
 });

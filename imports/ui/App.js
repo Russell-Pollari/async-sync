@@ -23,6 +23,8 @@ import Users from './pages/Users';
 import LoginForm from './pages/LoginForm';
 import EnrollAccount from './pages/EnrollAccount';
 
+import GoogleOAuth from '/imports/google/ui/pages/GoogleOAuth';
+
 
 const useStyles = makeStyles(theme => ({
 	title: {
@@ -77,6 +79,9 @@ export const App = () => {
 						<Switch>
 							<Route path="/users">
 								<Users />
+							</Route>
+							<Route path="/oauth/google">
+								<GoogleOAuth />
 							</Route>
 							<Route>
 								<Meetings />

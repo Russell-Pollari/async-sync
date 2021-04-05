@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,6 +9,10 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+
+import { createDoc } from '/imports/google/methods/google.createDoc';
 
 
 const useStyles = makeStyles(() => ({
@@ -42,6 +46,7 @@ const Input = ({ field, ...rest }) => {
 
 
 const MeetingForm = ({ close, createMeeting }) => {
+	const [loadingGoogleDoc, setLoadingGoogleDoc] = useState(false);
 	const classes = useStyles();
 
 	const handleSumbit = (form) => {
@@ -54,6 +59,18 @@ const MeetingForm = ({ close, createMeeting }) => {
 				alert(err);
 			} else {
 				close();
+			}
+		});
+	};
+
+	const handleGoogleClick = (setFieldValue) => () => {
+		setLoadingGoogleDoc(true);
+		createDoc.call((err, docId) => {
+			setLoadingGoogleDoc(false);
+			if (err) {
+				alert(err);
+			} else {
+				setFieldValue('meetingDocURL', 'https://docs.google.com/document/d/' + docId);
 			}
 		});
 	};
@@ -77,7 +94,7 @@ const MeetingForm = ({ close, createMeeting }) => {
 					description: '',
 					date: '',
 				}}>
-				{() => (
+				{({ values, setFieldValue }) => (
 					<Form>
 						<Field
 							autoFocus
@@ -86,6 +103,19 @@ const MeetingForm = ({ close, createMeeting }) => {
 							fullWidth
 							component={Input}
 						/>
+					{!values.meetingDocURL && (
+						loadingGoogleDoc ? (
+							<CircularProgress />
+						) : (
+							<Button
+								variant="contained"
+								color="primary"
+								startIcon={<InsertDriveFileIcon />}
+								onClick={handleGoogleClick(setFieldValue)}>
+								Create google doc
+							</Button>
+						)
+					)}
 						<Field
 							name="meetingDocURL"
 							label="Meeting doc"

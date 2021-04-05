@@ -11,6 +11,7 @@ import MeetingCard from '/imports/ui/MeetingCard';
 
 import MeetingsCollection from '/imports/api/collections/Meetings';
 import { createMeeting } from '/imports/api/methods/meetings.create';
+import { getAuthUrl } from '/imports/google/methods/google.getAuthUrl';
 
 
 const MeetingsPage = () => {
@@ -30,8 +31,21 @@ const MeetingsPage = () => {
 	}, []);
 
 
+	const handleGoogleClick = () => {
+		getAuthUrl.call((err, result) => {
+			if (err) {
+				alert(err);
+			} else {
+				location.href = result;
+			}
+		});
+	};
+
 	return (
 		<Fragment>
+			<Button onClick={handleGoogleClick}>
+				Authorize Google
+			</Button>
 			{showForm ?  (
 				<MeetingForm
 					createMeeting={createMeeting}

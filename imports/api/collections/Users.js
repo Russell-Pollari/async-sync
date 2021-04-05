@@ -26,6 +26,10 @@ const schema = new SimpleSchema({
 		type: Object,
 		blackbox: true,
 	},
+	googleToken: {
+		type: Object,
+		blackbox: true,
+	},
 });
 
 Meteor.users.attachSchema(baseSchema);
