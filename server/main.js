@@ -37,6 +37,5 @@ Meteor.startup(() => {
 			email: 'admin@admin.com',
 			password: 'admin',
 		});
-
 	}
 });

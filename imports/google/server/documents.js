@@ -50,7 +50,7 @@ export const createDocument = () => {
 				drive.files.update({
 					fileId: docId,
 					removeParents: previousParents,
-					addParents: Meteor.settings.private.MEETING_FOLDER_ID,
+					addParents: Meteor.settings.private.GOOGLE_DRIVE_FOLDER_ID,
 				}, (err) => {
 					if (err) {
 						return reject(err);

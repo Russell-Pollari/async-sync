@@ -30,6 +30,8 @@ const schema = new SimpleSchema({
 		type: Object,
 		blackbox: true,
 	},
+}, {
+	requiredByDefault: false,
 });
 
 Meteor.users.attachSchema(baseSchema);
