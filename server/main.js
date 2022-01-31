@@ -16,6 +16,7 @@ import '/imports/api/publications/user';
 import '/imports/google/methods/google.getAuthUrl';
 import '/imports/google/methods/google.saveToken';
 import '/imports/google/methods/google.createDoc';
+import '/imports/google/methods/google.createWeekly';
 
 
 Meteor.startup(() => {

@@ -29,12 +29,12 @@ const MeetingsPage = () => {
 		<Fragment>
 			<div style={{ textAlign: 'right', margin: 16 }}>
 				<Button
-					to="/add-meeting"
+					to="/create-weekly"
 					component={RouterLink}
 					color="primary"
 					startIcon={<AddIcon />}
 					variant="contained">
-					Add meeting
+					New Weekly
 				</Button>
 			</div>
 			{loading ? (

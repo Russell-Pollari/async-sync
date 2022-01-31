@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,14 +9,10 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 
-import { createDoc } from '/imports/google/methods/google.createDoc';
 import { getAuthUrl } from '/imports/google/methods/google.getAuthUrl';
+import { createWeekly } from '/imports/google/methods/google.createWeekly';
 import { createMeeting } from '/imports/api/methods/meetings.create';
-
 
 const useStyles = makeStyles(() => ({
 	paper: {
@@ -51,14 +48,9 @@ const Input = ({ field, ...rest }) => {
 
 
 const AddMeeting = () => {
-	const [loadingGoogleDoc, setLoadingGoogleDoc] = useState(false);
-	const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-
 	const classes = useStyles();
-
-	const handleCloseSnackBar = () => {
-		setShowSuccessMessage(false);
-	};
+	const [loading, setLoading] = useState(false);
+	const [docId, setDocId] = useState(null);
 
 	const handleGoogleClick = () => {
 		getAuthUrl.call((err, result) => {
@@ -70,33 +62,37 @@ const AddMeeting = () => {
 		});
 	};
 
-
-	const handleGoogleDocClick = (setFieldValue) => () => {
-		setLoadingGoogleDoc(true);
-		createDoc.call((err, docId) => {
-			setLoadingGoogleDoc(false);
-			if (err) {
-				alert(err);
-			} else {
-				setFieldValue('meetingDocURL', 'https://docs.google.com/document/d/' + docId);
-			}
-		});
-	};
-
-	const handleSumbit = (form, callback) => {
-		// TODO: use a client-side schema to clean, transform and validate
-		// Probably yup, or maybe simpl-schema
+	const handleSubmit = (form) => {
+		setLoading(true);
 		form['date'] = new Date(form['date']);
+		const dateString = form['date'].toISOString().slice(0,10);
 
-		createMeeting.call(form, err => {
+		createWeekly.call({ dateString, ...form }, (err, result) => {
 			if (err) {
-				alert(err);
-			} else {
-				setShowSuccessMessage(true);
-				callback();
+				console.error(err);
+				setLoading(false);
+			}
+			if (result) {
+				createMeeting.call({
+					meetingDocURL: `https://docs.google.com/document/d/${result}`,
+					title: dateString,
+					description: `${dateString} Weekly meeting`,
+					date: form['date'],
+				}, err => {
+					if (!err) {
+						setDocId(result);
+						setLoading(false);
+					}
+				});
 			}
 		});
 	};
+
+	if (docId) {
+		return (
+			<Redirect to="/" />
+		);
+	}
 
 	return (
 		<Paper className={classes.paper}>
@@ -107,43 +103,17 @@ const AddMeeting = () => {
 				Add a meeting
 			</Typography>
 			<Formik
-				onSubmit={(values, actions) => {
-					handleSumbit(values, actions.resetForm);
+				onSubmit={(values) => {
+					handleSubmit(values);
 				}}
 				initialValues={{
-					title: '',
-					meetingDocURL: '',
-					description: '',
 					date: '',
+					russ: '',
+					ale: '',
+					rose: '',
 				}}>
-				{({ values, setFieldValue }) => (
+				{() => (
 					<Form>
-						<Field
-							autoFocus
-							name="title"
-							label="Title"
-							fullWidth
-							component={Input}
-						/>
-						{!values.meetingDocURL && (
-							loadingGoogleDoc ? (
-								<CircularProgress />
-							) : (
-								<Button
-									variant="contained"
-									color="primary"
-									startIcon={<InsertDriveFileIcon />}
-									onClick={handleGoogleDocClick(setFieldValue)}>
-									Create google doc
-								</Button>
-							)
-						)}
-						<Field
-							name="meetingDocURL"
-							label="Meeting doc"
-							fullWidth
-							component={Input}
-						/>
 						<Field
 							name="date"
 							label="Date"
@@ -152,32 +122,41 @@ const AddMeeting = () => {
 							component={Input}
 						/>
 						<Field
-							name="description"
-							label="Description"
+							name="russ"
+							label="Russ todos"
+							multiline
+							rows={4}
+							fullWidth
+							component={Input}
+						/>
+						<Field
+							name="ale"
+							label="Ale todos"
+							multiline
+							rows={4}
+							fullWidth
+							component={Input}
+						/>
+						<Field
+							name="rose"
+							label="Rose todos"
 							multiline
 							rows={4}
 							fullWidth
 							component={Input}
 						/>
 						<Button
+							disabled={loading}
 							className={classes.button}
 							variant="contained"
 							startIcon={<AddIcon />}
 							color="primary"
 							type="submit">
-							Add meeting
+							{loading ? <CircularProgress /> : 'Create meeting doc'}
 						</Button>
 					</Form>
 				)}
 			</Formik>
-			<Snackbar
-				open={showSuccessMessage}
-				autoHideDuration={3000}
-				onClose={handleCloseSnackBar}>
-				<Alert onClose={handleCloseSnackBar} severity="success">
-					Meeting created!
-				</Alert>
-			</Snackbar>
 		</Paper>
 	);
 };
